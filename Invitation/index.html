@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Teachers' Day 2026 | SS Education Committee</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --bg-base: #030712;
+            --card-bg: rgba(10, 15, 30, 0.88);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent-color: #38bdf8;
+            --border: rgba(56, 189, 248, 0.22);
+            --box-bg: rgba(15, 23, 42, 0.75);
+            --shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.95);
+        }
+
+        /* Fully Animated Interactive Canvas Background */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body {
+            background: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: env(safe-area-inset-top, 16px) env(safe-area-inset-right, 16px) env(safe-area-inset-bottom, 16px) env(safe-area-inset-left, 16px);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .main-screen {
+            text-align: center;
+            color: #ffffff;
+            width: 100%;
+            max-width: 440px;
+            padding: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge {
+            background: rgba(56, 189, 248, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            color: var(--accent-color);
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: clamp(0.65rem, 2.5vw, 0.72rem);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin-bottom: 4vh;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .main-screen h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.1rem, 8vw, 2.8rem);
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 2vh;
+            line-height: 1.15;
+            letter-spacing: -0.5px;
+        }
+
+        .main-screen p {
+            font-size: clamp(0.85rem, 3.5vw, 0.98rem);
+            color: var(--text-muted);
+            margin-bottom: 4vh;
+            line-height: 1.6;
+            padding: 0 10px;
+        }
+
+        .open-btn {
+            background: linear-gradient(135deg, #0f172a, #020617);
+            color: #f8fafc;
+            border: 1px solid var(--border);
+            width: 100%;
+            max-width: 240px;
+            padding: 15px 24px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.2s ease;
+        }
+
+        .open-btn:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+        }
+
+        .open-btn:active {
+            transform: scale(0.95);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 7, 18, 0.35);
+            backdrop-filter: blur(2.5px);
+            -webkit-backdrop-filter: blur(2.5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .invitation-card {
+            background: var(--card-bg);
+            color: var(--text-main);
+            width: 100%;
+            max-width: 390px;
+            max-height: 90vh;
+            max-height: 90dvh;
+            padding: clamp(20px, 4vh, 28px) clamp(16px, 4vw, 22px);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            position: relative;
+            transform: translateY(15px) scale(0.97);
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .modal-overlay.active .invitation-card {
+            transform: translateY(0) scale(1);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: var(--box-bg);
+            border: 1px solid var(--border);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 1rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: transform 0.1s ease;
+        }
+
+        .close-btn:active {
+            transform: scale(0.9);
+        }
+
+        .card-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.3rem, 5vw, 1.55rem);
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #ffffff;
+            line-height: 1.2;
+            letter-spacing: -0.3px;
+        }
+
+        .card-header p {
+            color: var(--text-muted);
+            font-size: clamp(0.75rem, 3vw, 0.83rem);
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+
+        .card-details {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            background: var(--box-bg);
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 12px;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .icon {
+            font-size: 0.9rem;
+            background: #020617;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .detail-content strong {
+            font-size: 0.62rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 1px;
+        }
+
+        .detail-content p {
+            font-size: clamp(0.78rem, 3.2vw, 0.85rem);
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .card-info {
+            background: var(--box-bg);
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-info h3 {
+            font-size: clamp(0.78rem, 3.2vw, 0.85rem);
+            font-weight: 700;
+            margin-bottom: 3px;
+            color: var(--accent-color);
+        }
+
+        .card-info p {
+            font-size: clamp(0.7rem, 2.8vw, 0.77rem);
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bgCanvas"></canvas>
+
+    <div class="main-screen">
+        <span class="badge">SS Education Committee</span>
+        <h1>Teachers' Day Celebration</h1>
+        <p>An elite gathering dedicated to honoring the excellence of our esteemed faculty and students. Tap below to access your invitation card.</p>
+        <button onclick="openInvitation()" class="open-btn">
+            <span>View Invitation</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+    </div>
+
+    <div id="modal-overlay" class="modal-overlay" onclick="handleOutsideClick(event)">
+        <div class="invitation-card">
+            <button onclick="closeInvitation()" class="close-btn" aria-label="Close">&times;</button>
+
+            <div class="card-header">
+                <h2>Official Invitation</h2>
+                <p>The SS Education Committee cordially invites all teachers and students to a premier commemoration of guidance, dedication, and knowledge.</p>
+            </div>
+
+            <div class="card-details">
+                <div class="detail-row">
+                    <span class="icon">📅</span>
+                    <div class="detail-content">
+                        <strong>Date</strong>
+                        <p>September 6th, 2026</p>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <span class="icon">⏰</span>
+                    <div class="detail-content">
+                        <strong>Time</strong>
+                        <p>5:00 PM – 9:00 PM</p>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <span class="icon">📍</span>
+                    <div class="detail-content">
+                        <strong>Venue</strong>
+                        <p>SS Education Campus</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-info">
+                <h3>Programme Overview</h3>
+                <p>Formal felicitation ceremonies, group activities, structured student performances, and refreshments arranged by the committee.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.6;
+                this.vy = (Math.random() - 0.5) * 0.6;
+                this.radius = Math.random() * 1.5 + 0.8;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx = -this.vx;
+                if (this.y < 0 || this.y > height) this.vy = -this.vy;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(56, 189, 248, 0.45)';
+                ctx.fill();
+            }
+        }
+
+        // Increased particle density for mobile phones (ph) as requested
+        const particleCount = window.innerWidth > 768 ? 70 : 55;
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(56, 189, 248, ${0.12 * (1 - dist / 120)})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        function openInvitation() {
+            document.getElementById("modal-overlay").classList.add("active");
+        }
+
+        function closeInvitation() {
+            document.getElementById("modal-overlay").classList.remove("active");
+        }
+
+        function handleOutsideClick(event) {
+            const overlay = document.getElementById("modal-overlay");
+            if (event.target === overlay) {
+                closeInvitation();
+            }
+        }
+    </script>
+</body>
+</html>
